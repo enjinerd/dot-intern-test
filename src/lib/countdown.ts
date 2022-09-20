@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useCountdown = (targetDate: string) => {
+const useCountdown = (targetDate: Date) => {
   const countDownDate = new Date(targetDate).getTime();
 
   const [countDown, setCountDown] = useState(countDownDate - new Date().getTime());
@@ -23,7 +23,23 @@ const getReturnValues = (countDown: number) => {
   const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
 
-  return { days, hours, minutes, seconds };
+  if (countDown < 0) {
+    return {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      expired: true,
+    };
+  } else {
+    return {
+      days,
+      hours,
+      minutes,
+      seconds,
+      expired: false,
+    };
+  }
 };
 
 export { useCountdown };

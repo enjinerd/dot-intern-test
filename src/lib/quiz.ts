@@ -9,12 +9,11 @@ interface Question {
   question: string;
   correct_answer: string;
   incorrect_answers: string[];
-  selected_answer?: string;
+  user_answer: string;
 }
 
 interface QuizState {
   questions: Question[];
-  userAnswers: string[];
   score: number;
   lastQuestion: number;
   loading: boolean;
@@ -47,24 +46,25 @@ export const useQuiz = create<QuizState>()(
           const { data } = await axios.get(
             `https://opentdb.com/api.php?amount=10&category=22&type=boolean`,
           );
-          console.log(data);
-          set({
-            questions: data.results,
-            userAnswers: new Array(data.results.length).fill(false),
-            loading: false,
-          });
+
+          const questions = data.results.map((question: Question) => ({
+            ...question,
+            user_answer: "",
+          }));
+
+          set({ questions, loading: false });
         } catch (error) {
           set({ error: true, loading: false });
         }
       },
       startQuiz: () => {
-        set({ startDateTime: Date.now(), expiredTime: Date.now() + 1000 * 60 * 15 });
+        set({ startDateTime: Date.now(), expiredTime: Date.now() + 1000 * 60 * 1 });
       },
       setAnswer: (answer) => {
         set((state) => {
-          const userAnswers = [...state.userAnswers];
-          userAnswers[state.lastQuestion] = answer;
-          return { userAnswers };
+          const questions = [...state.questions];
+          questions[state.lastQuestion].user_answer = answer;
+          return { questions };
         });
       },
       nextQuestion: () => {
@@ -85,11 +85,10 @@ export const useQuiz = create<QuizState>()(
       calculateScore: () => {
         set((state) => {
           const score = state.questions.reduce((acc, curr, i) => {
-            if (curr.correct_answer === "True") {
-              return state.userAnswers[i] ? acc + 1 : acc;
-            } else {
-              return !state.userAnswers[i] ? acc + 1 : acc;
+            if (curr.user_answer === curr.correct_answer) {
+              return acc + 1 * 10;
             }
+            return acc;
           }, 0);
           return { score };
         });
