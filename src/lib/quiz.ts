@@ -26,6 +26,7 @@ interface QuizState {
   nextQuestion: () => void;
   prevQuestion: () => void;
   calculateScore: () => void;
+  resetQuiz: () => void;
 }
 
 export const useQuiz = create<QuizState>()(
@@ -54,7 +55,7 @@ export const useQuiz = create<QuizState>()(
 
           set({ questions, loading: false });
         } catch (error) {
-          set({ error: true, loading: false });
+          set({ error: true, loading: false, expiredTime: 0 });
         }
       },
       startQuiz: () => {
@@ -91,6 +92,17 @@ export const useQuiz = create<QuizState>()(
             return acc;
           }, 0);
           return { score };
+        });
+      },
+      resetQuiz: () => {
+        set({
+          questions: [],
+          score: 0,
+          lastQuestion: 0,
+          startDateTime: 0,
+          expiredTime: 0,
+          loading: false,
+          error: false,
         });
       },
     }),

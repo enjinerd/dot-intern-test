@@ -1,7 +1,6 @@
 import { Group, Button, Text, Container, createStyles } from "@mantine/core";
 import { useQuiz } from "lib";
-import { useEffect } from "react";
-import { useCountdown } from "lib";
+import { unescape } from "underscore";
 
 interface Question {
   question: string;
@@ -32,24 +31,24 @@ const useStyles = createStyles((theme) => ({
 
 export const Question = (props: Question) => {
   const { question, user_answer } = props;
-  const { setAnswer, nextQuestion, prevQuestion, startDateTime, expiredTime } = useQuiz();
-  const availableTime = expiredTime - startDateTime;
-  const expiredTimeDate = new Date(expiredTime);
-  console.log(expiredTimeDate);
+  const { setAnswer, nextQuestion, prevQuestion, lastQuestion, questions } = useQuiz();
   const { classes, theme } = useStyles();
-
-  const handleAnswer = (answer: "False" | "True") => {
-    console.log(user_answer);
-    setAnswer(answer);
-  };
 
   return (
     <>
       <Group>
-        <Button onClick={() => prevQuestion()} variant="filled" color="gray">
+        <Button
+          onClick={() => prevQuestion()}
+          variant="filled"
+          color="teal"
+          disabled={lastQuestion === 0}>
           Prev
         </Button>
-        <Button onClick={() => nextQuestion()} variant="filled" color="gray">
+        <Button
+          onClick={() => nextQuestion()}
+          variant="filled"
+          color="teal"
+          disabled={lastQuestion + 1 === questions.length}>
           Next
         </Button>
       </Group>
@@ -59,23 +58,23 @@ export const Question = (props: Question) => {
             component="span"
             align="center"
             variant="gradient"
-            gradient={{ from: "red", to: "orange", deg: 45 }}
+            gradient={{ from: "red", to: "blue", deg: 45 }}
             size="xl"
             weight={700}
             style={{ fontFamily: "Greycliff CF, sans-serif" }}>
-            {question}
+            {unescape(question)}
           </Text>
         </Container>
       </Container>
       <Group>
         <Button
-          onClick={() => handleAnswer("True")}
+          onClick={() => setAnswer("True")}
           className={classes.button}
           color={user_answer === "True" ? "green" : "blue"}>
           True
         </Button>
         <Button
-          onClick={() => handleAnswer("False")}
+          onClick={() => setAnswer("False")}
           className={classes.button}
           color={user_answer === "False" ? "green" : "blue"}>
           False

@@ -1,4 +1,14 @@
-import { Container, Title, createStyles, Button, Group, Text } from "@mantine/core";
+import {
+  Container,
+  Title,
+  createStyles,
+  Button,
+  Group,
+  Text,
+  Modal,
+  Box,
+  Divider,
+} from "@mantine/core";
 import Layout from "components/layout/Layout";
 import { useQuiz } from "lib";
 import { useEffect } from "react";
@@ -34,6 +44,19 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     gap: theme.spacing.lg,
   },
+
+  start_wrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: theme.spacing.xl,
+  },
+
+  modal: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing.xl,
+  },
 }));
 
 export default function Quiz() {
@@ -46,52 +69,122 @@ export default function Quiz() {
     score,
     startDateTime,
     expiredTime,
+    resetQuiz,
   } = useQuiz();
   const [isStarted, setIsStarted] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
   const { classes, theme } = useStyles();
   const expiredTimeDate = new Date(expiredTime);
   const { minutes, seconds, expired } = useCountdown(expiredTimeDate);
 
-  const handleStartQuestion = () => {
+  const handleStartQuestion = async () => {
+    await fetchQuestions();
     startQuiz();
     setIsStarted(true);
   };
 
+  const handleFinished = () => {
+    setIsStarted(false);
+    setIsFinished(false);
+    resetQuiz();
+  };
+
   const handleSubmit = () => {
     calculateScore();
-    alert("Your score is " + score);
+    setIsFinished(true);
   };
 
   useEffect(() => {
-    console.log(lastQuestion);
-    if (lastQuestion === 0) {
-      fetchQuestions();
+    if (expiredTimeDate === new Date(0)) {
+      setIsFinished(false);
     }
-  }, []);
+  }, [expired]);
 
   return (
     <Layout>
       <Container className={classes.wrapper}>
-        {expired && <Text>Time is up!</Text>}
-        {isStarted ? (
-          <Container className={classes.question_wrapper}>
-            <Group>
-              <Text variant="gradient" weight="800" size="lg">
-                {" "}
-                {`${lastQuestion + 1} / 10`}
+        <Modal
+          withCloseButton={false}
+          opened={isFinished}
+          className={classes.modal}
+          onClose={() => console.log("close")}>
+          <Container>
+            <Title color="orange">Time is up!</Title>
+            <Group mt={12}>
+              <Text>
+                Your score is {score} out of {questions.length * 10}
+                <Divider />
+                You answered {questions.filter((q) => q.user_answer !== "").length} out of{" "}
+                {questions.length} questions <Divider /> You correct answer is{" "}
+                {score / 10} out of {questions.length} questions <Divider /> Your wrong
+                answer is {questions.length - score / 10} out of {questions.length}{" "}
+                questions
+                <Divider />
               </Text>
-              {`${minutes} : ${seconds}`}
-              <Button variant="filled" color="orange" onClick={() => handleSubmit()}>
-                Submit
+            </Group>
+            <Group mt={12}>
+              <Button color="blue" fullWidth onClick={handleFinished}>
+                Start another Quiz
               </Button>
             </Group>
-            <Question
-              question={questions[lastQuestion].question}
-              user_answer={questions[lastQuestion].user_answer}
-            />
           </Container>
+        </Modal>
+
+        {isStarted ? (
+          expiredTime > 0 ? (
+            <Container className={classes.question_wrapper}>
+              <Box>
+                <Title>{`${minutes} : ${seconds}`}</Title>
+              </Box>
+              <Group>
+                <Text variant="gradient" weight="800" size="lg">
+                  {" "}
+                  {`Question No : ${lastQuestion + 1} / 10`}
+                </Text>
+                <Button variant="filled" color="orange" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </Group>
+              <Question
+                question={questions[lastQuestion].question}
+                user_answer={questions[lastQuestion].user_answer}
+              />
+            </Container>
+          ) : (
+            <Modal
+              withCloseButton={false}
+              opened={true}
+              className={classes.modal}
+              onClose={() => console.log("close")}>
+              <Container>
+                <Title color="orange">Time is up!</Title>
+                <Group mt={12}>
+                  <Text>
+                    Your score is {score} out of {questions.length * 10}
+                    <Divider />
+                    You answered {
+                      questions.filter((q) => q.user_answer !== "").length
+                    }{" "}
+                    out of {questions.length} questions <Divider /> You correct answer is{" "}
+                    {score / 10} out of {questions.length} questions <Divider /> Your
+                    wrong answer is {questions.length - score / 10} out of{" "}
+                    {questions.length} questions
+                    <Divider />
+                  </Text>
+                </Group>
+                <Group mt={12}>
+                  <Button color="blue" fullWidth>
+                    Start another Quiz
+                  </Button>
+                  <Button color="orange" fullWidth onClick={() => setIsFinished(false)}>
+                    Close
+                  </Button>
+                </Group>
+              </Container>
+            </Modal>
+          )
         ) : (
-          <Group>
+          <Group className={classes.start_wrapper}>
             <Title className={classes.title}>Geography Quiz</Title>
             <Button size="lg" onClick={handleStartQuestion}>
               {" "}
