@@ -1,5 +1,12 @@
 # Geography Quiz App for Applying into DOT Internship
 
+## Preview : https://geography-quiz-app.netlify.app/
+
+### For login to app
+
+email : dev@ron.my.id
+pass : satusatu
+
 ## Authors
 
 - [@enjinerd](https://www.github.com/enjinerd) - **Roni Ardiyanto**
