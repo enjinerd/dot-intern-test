@@ -1,13 +1,17 @@
-# Terra - Supercharged React Boilerplate
+# Geography Quiz App for Applying into DOT Internship
 
-![cover](https://i.ibb.co/XbJL08v/logo-readme.png)
+## Authors
 
-### Supercharged React Boilerplate powered By Typescript + Vite + Mantine
+- [@enjinerd](https://www.github.com/enjinerd) - **Roni Ardiyanto**
 
 # Tech Stack
 
 ![tailwindcss](https://badges.aleen42.com/src/tailwindcss.svg) ![react](https://badges.aleen42.com/src/react.svg) ![vite](https://badges.aleen42.com/src/vitejs.svg) ![typescript](https://badges.aleen42.com/src/typescript.svg)
 
-## Authors
+## How to run
 
-- [@enjinerd](https://www.github.com/enjinerd) - **Roni Ardiyanto**
+1. Clone this repository
+2. Install dependencies with `yarn`
+3. Duplicate `.env.example` and rename it to `.env or .env.local`. NB : for intern purpose i included the value on .env.example to easier setup
+4. Run `yarn dev` to start the development server
+5. Open `http://localhost:5173` on your browser
