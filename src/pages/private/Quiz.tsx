@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { Question } from "components/private";
 import { useState } from "react";
 import { useCountdown } from "lib";
+import { useAuth } from "lib";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -76,6 +77,7 @@ export default function Quiz() {
   const { classes, theme } = useStyles();
   const expiredTimeDate = new Date(expiredTime);
   const { minutes, seconds, expired } = useCountdown(expiredTimeDate);
+  const { logout } = useAuth();
 
   const handleStartQuestion = async () => {
     resetQuiz();
@@ -132,7 +134,8 @@ export default function Quiz() {
               withCloseButton={false}
               opened={true}
               className={classes.modal}
-              onClose={() => console.log("close")}>
+              onClose={() => console.log("close")}
+              centered>
               <Container>
                 <Title color="orange">Time is up!</Title>
                 <Group mt={12}>
@@ -160,10 +163,16 @@ export default function Quiz() {
         ) : (
           <Group className={classes.start_wrapper}>
             <Title className={classes.title}>Geography Quiz</Title>
-            <Button size="lg" onClick={handleStartQuestion}>
-              {" "}
-              Start{" "}
-            </Button>
+            <Group>
+              <Button size="lg" onClick={handleStartQuestion} fullWidth>
+                {" "}
+                Start{" "}
+              </Button>
+              <Button size="lg" onClick={() => logout()} color="red" fullWidth>
+                {" "}
+                Logout{" "}
+              </Button>
+            </Group>
           </Group>
         )}
       </Container>
