@@ -20,6 +20,7 @@ interface QuizState {
   error: boolean;
   expiredTime: number;
   startDateTime: number;
+  isStarted: boolean;
   fetchQuestions: () => Promise<void>;
   startQuiz: () => void;
   setAnswer: (answer: "False" | "True") => void;
@@ -41,6 +42,7 @@ export const useQuiz = create<QuizState>()(
       loading: false,
       error: false,
       timer: 0,
+      isStarted: false,
       fetchQuestions: async () => {
         try {
           set({ loading: true });
@@ -59,7 +61,11 @@ export const useQuiz = create<QuizState>()(
         }
       },
       startQuiz: () => {
-        set({ startDateTime: Date.now(), expiredTime: Date.now() + 1000 * 60 * 1 });
+        set({
+          startDateTime: Date.now(),
+          expiredTime: Date.now() + 1000 * 60 * 1,
+          isStarted: true,
+        });
       },
       setAnswer: (answer) => {
         set((state) => {
@@ -103,6 +109,7 @@ export const useQuiz = create<QuizState>()(
           expiredTime: 0,
           loading: false,
           error: false,
+          isStarted: false,
         });
       },
     }),

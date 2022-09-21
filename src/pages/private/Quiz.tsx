@@ -69,24 +69,19 @@ export default function Quiz() {
     score,
     startDateTime,
     expiredTime,
+    isStarted,
     resetQuiz,
   } = useQuiz();
-  const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const { classes, theme } = useStyles();
   const expiredTimeDate = new Date(expiredTime);
   const { minutes, seconds, expired } = useCountdown(expiredTimeDate);
 
   const handleStartQuestion = async () => {
+    resetQuiz();
     await fetchQuestions();
     startQuiz();
-    setIsStarted(true);
-  };
-
-  const handleFinished = () => {
-    setIsStarted(false);
     setIsFinished(false);
-    resetQuiz();
   };
 
   const handleSubmit = () => {
@@ -96,42 +91,24 @@ export default function Quiz() {
 
   useEffect(() => {
     if (expiredTimeDate === new Date(0)) {
-      setIsFinished(false);
+      // Code
+    }
+
+    if (isStarted && expired && expiredTimeDate !== new Date(0)) {
+      setIsFinished(true);
+    }
+
+    if (expired) {
+      calculateScore();
+      setIsFinished(true);
     }
   }, [expired]);
 
   return (
     <Layout>
       <Container className={classes.wrapper}>
-        <Modal
-          withCloseButton={false}
-          opened={isFinished}
-          className={classes.modal}
-          onClose={() => console.log("close")}>
-          <Container>
-            <Title color="orange">Time is up!</Title>
-            <Group mt={12}>
-              <Text>
-                Your score is {score} out of {questions.length * 10}
-                <Divider />
-                You answered {questions.filter((q) => q.user_answer !== "").length} out of{" "}
-                {questions.length} questions <Divider /> You correct answer is{" "}
-                {score / 10} out of {questions.length} questions <Divider /> Your wrong
-                answer is {questions.length - score / 10} out of {questions.length}{" "}
-                questions
-                <Divider />
-              </Text>
-            </Group>
-            <Group mt={12}>
-              <Button color="blue" fullWidth onClick={handleFinished}>
-                Start another Quiz
-              </Button>
-            </Group>
-          </Container>
-        </Modal>
-
         {isStarted ? (
-          expiredTime > 0 ? (
+          expiredTime > 0 && expiredTimeDate !== new Date(0) && !isFinished ? (
             <Container className={classes.question_wrapper}>
               <Box>
                 <Title>{`${minutes} : ${seconds}`}</Title>
@@ -173,11 +150,8 @@ export default function Quiz() {
                   </Text>
                 </Group>
                 <Group mt={12}>
-                  <Button color="blue" fullWidth>
+                  <Button color="blue" fullWidth onClick={handleStartQuestion}>
                     Start another Quiz
-                  </Button>
-                  <Button color="orange" fullWidth onClick={() => setIsFinished(false)}>
-                    Close
                   </Button>
                 </Group>
               </Container>
