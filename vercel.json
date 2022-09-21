@@ -1,7 +1,7 @@
 {
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "github": {
-    "enabled": false,
+    "enabled": true,
     "silent": true
   }
 }
