@@ -152,7 +152,7 @@ export default function Quiz() {
               className={classes.modal}
               onClose={() => console.log("close")}>
               <Container>
-                <Title color="orange">Time is up!</Title>
+                <Title color="orange">Your Score</Title>
                 <Group mt={12}>
                   <Text>
                     Your score is {score} out of {questions.length * 10}
