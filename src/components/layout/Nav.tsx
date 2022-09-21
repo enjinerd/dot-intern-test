@@ -1,17 +1,17 @@
-import { useState } from "react";
 import {
-  createStyles,
-  Header,
-  Container,
-  Group,
-  Burger,
-  Text,
-  Image,
   ActionIcon,
+  Burger,
+  Container,
+  createStyles,
+  Group,
+  Header,
+  Image,
+  Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconSun, IconMoonStars } from "@tabler/icons";
+import { IconMoonStars, IconSun } from "@tabler/icons";
 import { useTheme } from "lib";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
@@ -113,7 +113,7 @@ const Nav = ({ links }: HeaderSimpleProps) => {
       key={link.label}
       href={link.link}
       className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-      onClick={(event) => {
+      onClick={() => {
         setActive(link.link);
       }}>
       {link.label}

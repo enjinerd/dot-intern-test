@@ -1,4 +1,4 @@
-import { Container, Title, Accordion, createStyles } from "@mantine/core";
+import { Accordion, Container, createStyles, Title } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

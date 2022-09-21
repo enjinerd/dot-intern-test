@@ -1,5 +1,5 @@
-import { createStyles, ThemeIcon, Text, SimpleGrid, Box, Stack } from "@mantine/core";
-import { IconSun, IconPhone, IconMapPin, IconAt } from "@tabler/icons";
+import { Box, createStyles, SimpleGrid, Stack, Text, ThemeIcon } from "@mantine/core";
+import { IconAt, IconMapPin, IconPhone, IconSun } from "@tabler/icons";
 
 type ContactIconVariant = "white" | "gradient";
 

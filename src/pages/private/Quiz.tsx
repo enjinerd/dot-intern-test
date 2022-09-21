@@ -1,22 +1,22 @@
 import {
-  Container,
-  Title,
-  createStyles,
-  Button,
-  Group,
-  Text,
-  Modal,
   Box,
+  Button,
+  Container,
+  createStyles,
   Divider,
+  Group,
+  Modal,
+  Text,
+  Title,
 } from "@mantine/core";
 import Layout from "components/layout/Layout";
-import { useQuiz } from "lib";
-import { useEffect } from "react";
 import { Question } from "components/private";
-import { useState } from "react";
+import { ConfirmDialog } from "components/ui";
+import { useQuiz } from "lib";
 import { useCountdown } from "lib";
 import { useAuth } from "lib";
-import { ConfirmDialog } from "components/ui";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -69,7 +69,6 @@ export default function Quiz() {
     startQuiz,
     calculateScore,
     score,
-    startDateTime,
     expiredTime,
     isStarted,
     resetQuiz,

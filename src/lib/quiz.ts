@@ -91,7 +91,7 @@ export const useQuiz = create<QuizState>()(
       },
       calculateScore: () => {
         set((state) => {
-          const score = state.questions.reduce((acc, curr, i) => {
+          const score = state.questions.reduce((acc, curr) => {
             if (curr.user_answer === curr.correct_answer) {
               return acc + 1 * 10;
             }
