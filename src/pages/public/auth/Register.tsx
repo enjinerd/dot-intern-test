@@ -17,12 +17,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Layout from "components/layout/Layout";
 import { useAuth } from "lib";
+import { useEffect } from "react";
 
 export function Register() {
-  const { register } = useAuth();
+  const { register, session } = useAuth();
   const [error, setError] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [isRegistered, setRegisterd] = useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +56,12 @@ export function Register() {
       }
     },
   });
+
+  useEffect(() => {
+    if (session) {
+      navigate("/quiz");
+    }
+  }, [session]);
 
   return (
     <Layout>

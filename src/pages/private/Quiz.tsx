@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { Question } from "components/private";
 import { useState } from "react";
 import { useCountdown } from "lib";
+import { useAuth } from "lib";
+import { ConfirmDialog } from "components/ui";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -73,9 +75,12 @@ export default function Quiz() {
     resetQuiz,
   } = useQuiz();
   const [isFinished, setIsFinished] = useState(false);
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
   const expiredTimeDate = new Date(expiredTime);
   const { minutes, seconds, expired } = useCountdown(expiredTimeDate);
+  const { logout } = useAuth();
+  const [confirmLogout, setConfirmLogout] = useState(false);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
 
   const handleStartQuestion = async () => {
     resetQuiz();
@@ -87,6 +92,10 @@ export default function Quiz() {
   const handleSubmit = () => {
     calculateScore();
     setIsFinished(true);
+  };
+
+  const handleConfirmLogout = () => {
+    setConfirmLogout(true);
   };
 
   useEffect(() => {
@@ -118,13 +127,23 @@ export default function Quiz() {
                   {" "}
                   {`Question No : ${lastQuestion + 1} / 10`}
                 </Text>
-                <Button variant="filled" color="orange" onClick={handleSubmit}>
+                <Button
+                  variant="filled"
+                  color="orange"
+                  onClick={() => setConfirmSubmit(true)}>
                   Submit
                 </Button>
               </Group>
               <Question
                 question={questions[lastQuestion].question}
                 user_answer={questions[lastQuestion].user_answer}
+              />
+              <ConfirmDialog
+                setOpened={setConfirmSubmit}
+                title="Submit"
+                msg="Are you sure wanna Submit your answer?"
+                handleConfirm={handleSubmit}
+                isOpened={confirmSubmit}
               />
             </Container>
           ) : (
@@ -150,8 +169,8 @@ export default function Quiz() {
                   </Text>
                 </Group>
                 <Group mt={12}>
-                  <Button color="blue" fullWidth onClick={handleStartQuestion}>
-                    Start another Quiz
+                  <Button color="blue" fullWidth onClick={() => resetQuiz()}>
+                    Close
                   </Button>
                 </Group>
               </Container>
@@ -160,10 +179,25 @@ export default function Quiz() {
         ) : (
           <Group className={classes.start_wrapper}>
             <Title className={classes.title}>Geography Quiz</Title>
-            <Button size="lg" onClick={handleStartQuestion}>
-              {" "}
-              Start{" "}
-            </Button>
+            <Group>
+              <Button size="lg" onClick={handleStartQuestion} fullWidth>
+                {" "}
+                Start{" "}
+              </Button>
+              <Button size="lg" onClick={handleConfirmLogout} color="red" fullWidth>
+                {" "}
+                Logout{" "}
+              </Button>
+              <ConfirmDialog
+                setOpened={setConfirmLogout}
+                title="Logout"
+                msg="Are you sure wanna Logout?"
+                handleConfirm={() => {
+                  logout();
+                }}
+                isOpened={confirmLogout}
+              />
+            </Group>
           </Group>
         )}
       </Container>

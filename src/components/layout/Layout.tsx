@@ -8,14 +8,14 @@ const links = {
     //   link: "/#features",
     //   label: "Features",
     // },
-    {
-      link: "/",
-      label: "Home",
-    },
-    {
-      link: "/not-found",
-      label: "Not Found",
-    },
+    // {
+    //   link: "/",
+    //   label: "Home",
+    // },
+    // {
+    //   link: "/not-found",
+    //   label: "Not Found",
+    // },
   ],
 };
 
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => (
-  <AppShell header={<Nav links={links.links} />} padding="md">
+  <AppShell header={<Nav links={links.links} />} padding="md" footer={<Footer />}>
     {children}
   </AppShell>
 );

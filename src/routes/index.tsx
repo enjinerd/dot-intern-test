@@ -11,7 +11,14 @@ export default function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/quiz" element={<Quiz />} />
+        <Route
+          path="/quiz"
+          element={
+            <Private>
+              <Quiz />
+            </Private>
+          }
+        />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

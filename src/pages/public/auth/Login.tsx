@@ -10,18 +10,20 @@ import {
   Alert,
 } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Layout from "components/layout/Layout";
 import { useAuth } from "lib";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const { login } = useAuth();
+  const { login, session } = useAuth();
   const [error, setError] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -43,6 +45,12 @@ export function Login() {
       });
     },
   });
+
+  useEffect(() => {
+    if (session) {
+      navigate("/quiz");
+    }
+  }, [session]);
 
   return (
     <Layout>
