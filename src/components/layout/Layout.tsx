@@ -24,7 +24,7 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => (
-  <AppShell header={<Nav links={links.links} />} footer={<Footer />} padding="md">
+  <AppShell header={<Nav links={links.links} />} padding="md">
     {children}
   </AppShell>
 );
