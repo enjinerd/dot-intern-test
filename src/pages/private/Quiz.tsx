@@ -16,6 +16,7 @@ import { Question } from "components/private";
 import { useState } from "react";
 import { useCountdown } from "lib";
 import { useAuth } from "lib";
+import { ConfirmDialog } from "components/ui";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -74,10 +75,12 @@ export default function Quiz() {
     resetQuiz,
   } = useQuiz();
   const [isFinished, setIsFinished] = useState(false);
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
   const expiredTimeDate = new Date(expiredTime);
   const { minutes, seconds, expired } = useCountdown(expiredTimeDate);
   const { logout } = useAuth();
+  const [confirmLogout, setConfirmLogout] = useState(false);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
 
   const handleStartQuestion = async () => {
     resetQuiz();
@@ -89,6 +92,10 @@ export default function Quiz() {
   const handleSubmit = () => {
     calculateScore();
     setIsFinished(true);
+  };
+
+  const handleConfirmLogout = () => {
+    setConfirmLogout(true);
   };
 
   useEffect(() => {
@@ -120,7 +127,10 @@ export default function Quiz() {
                   {" "}
                   {`Question No : ${lastQuestion + 1} / 10`}
                 </Text>
-                <Button variant="filled" color="orange" onClick={handleSubmit}>
+                <Button
+                  variant="filled"
+                  color="orange"
+                  onClick={() => setConfirmSubmit(true)}>
                   Submit
                 </Button>
               </Group>
@@ -128,14 +138,20 @@ export default function Quiz() {
                 question={questions[lastQuestion].question}
                 user_answer={questions[lastQuestion].user_answer}
               />
+              <ConfirmDialog
+                setOpened={setConfirmSubmit}
+                title="Submit"
+                msg="Are you sure wanna Submit your answer?"
+                handleConfirm={handleSubmit}
+                isOpened={confirmSubmit}
+              />
             </Container>
           ) : (
             <Modal
               withCloseButton={false}
               opened={true}
               className={classes.modal}
-              onClose={() => console.log("close")}
-              centered>
+              onClose={() => console.log("close")}>
               <Container>
                 <Title color="orange">Time is up!</Title>
                 <Group mt={12}>
@@ -168,10 +184,19 @@ export default function Quiz() {
                 {" "}
                 Start{" "}
               </Button>
-              <Button size="lg" onClick={() => logout()} color="red" fullWidth>
+              <Button size="lg" onClick={handleConfirmLogout} color="red" fullWidth>
                 {" "}
                 Logout{" "}
               </Button>
+              <ConfirmDialog
+                setOpened={setConfirmLogout}
+                title="Logout"
+                msg="Are you sure wanna Logout?"
+                handleConfirm={() => {
+                  logout();
+                }}
+                isOpened={confirmLogout}
+              />
             </Group>
           </Group>
         )}
