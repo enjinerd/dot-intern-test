@@ -35,7 +35,7 @@ const Footer = () => {
       <Container className={classes.inner}>
         <Text size="sm" weight={600}>
           {" "}
-          ©{new Date().getFullYear()} Roni Ardiyanto. All rights reserved{" "}
+          ©{new Date().getFullYear()} Roni Ardiyanto - All rights reserved{" "}
         </Text>
         <Group spacing={0} className={classes.links} position="right" noWrap>
           <ActionIcon size="lg">
