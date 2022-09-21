@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Modal, Button, Group, Container, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Modal, Text, Title } from "@mantine/core";
 
 interface Props {
   title: string;

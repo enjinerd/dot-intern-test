@@ -1,15 +1,16 @@
 import {
-  createStyles,
-  Text,
-  Title,
-  SimpleGrid,
-  TextInput,
-  Textarea,
-  Button,
-  Group,
   ActionIcon,
+  Button,
+  createStyles,
+  Group,
+  SimpleGrid,
+  Text,
+  Textarea,
+  TextInput,
+  Title,
 } from "@mantine/core";
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from "@tabler/icons";
+import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from "@tabler/icons";
+
 import { ContactIconsList } from "./IconList";
 
 const useStyles = createStyles((theme) => ({

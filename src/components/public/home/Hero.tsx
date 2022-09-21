@@ -1,4 +1,4 @@
-import { Title, Text, Container, Button, Overlay, createStyles } from "@mantine/core";
+import { Button, Container, createStyles, Overlay, Text, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
@@ -92,7 +92,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function Hero() {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.wrapper}>
@@ -101,12 +101,12 @@ export function Hero() {
       <div className={classes.inner}>
         <Title className={classes.title}>
           Solve our 10 Geography questions in{" "}
-          <span className={classes.highlight}>10 minutes</span>
+          <span className={classes.highlight}>1 minutes</span>
         </Title>
 
         <Container size={640}>
           <Text size="lg" className={classes.description}>
-            Test your knowledge of the world with our 10 questions. You have 10 minutes to
+            Test your knowledge of the world with our 10 questions. You have 1 minutes to
             answer choose False or True for each question. You can see your score at the
             end of the quiz.
           </Text>

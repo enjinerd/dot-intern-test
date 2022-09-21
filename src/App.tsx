@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
-import Router from "routes";
+import { MantineProvider } from "@mantine/core";
 import { useTheme } from "lib";
+import Router from "routes";
 
 function App() {
   const { colorscheme } = useTheme();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(colorscheme);
 
   return (
     <MantineProvider

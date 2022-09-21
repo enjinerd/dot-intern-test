@@ -1,6 +1,7 @@
 import { AppShell } from "@mantine/core";
-import Nav from "./Nav";
+
 import Footer from "./Footer";
+import Nav from "./Nav";
 
 const links = {
   links: [

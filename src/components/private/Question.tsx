@@ -1,8 +1,8 @@
-import { Group, Button, Text, Container, createStyles } from "@mantine/core";
+import { Button, Container, createStyles, Group, Text } from "@mantine/core";
 import { useQuiz } from "lib";
 import { unescape } from "underscore";
 
-interface Question {
+interface Props {
   question: string;
   user_answer: string;
 }
@@ -29,10 +29,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const Question = (props: Question) => {
+export const Question = (props: Props) => {
   const { question, user_answer } = props;
   const { setAnswer, nextQuestion, prevQuestion, lastQuestion, questions } = useQuiz();
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
 
   return (
     <>

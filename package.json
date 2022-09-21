@@ -3,7 +3,6 @@
   "author": "roniardynt",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -39,6 +38,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/underscore": "^1.11.4",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.38.0",
     "@vitejs/plugin-react": "^2.1.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
@@ -48,6 +48,7 @@
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "identity-obj-proxy": "^3.0.0",
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.1",

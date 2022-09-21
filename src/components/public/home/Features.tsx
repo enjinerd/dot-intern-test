@@ -1,18 +1,18 @@
 import {
-  ThemeIcon,
-  Text,
-  Title,
   Container,
-  SimpleGrid,
-  useMantineTheme,
   createStyles,
+  SimpleGrid,
+  Text,
+  ThemeIcon,
+  Title,
+  useMantineTheme,
 } from "@mantine/core";
 import {
-  IconGauge,
   IconCookie,
-  IconUser,
-  IconMessage2,
+  IconGauge,
   IconLock,
+  IconMessage2,
+  IconUser,
   TablerIcon,
 } from "@tabler/icons";
 
