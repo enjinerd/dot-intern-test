@@ -28,6 +28,7 @@ export const useAuth = create<AuthState>()(
           });
           if (error) throw error;
           set({ user, session });
+          return session;
         } catch (error) {
           return error;
         }

@@ -150,8 +150,8 @@ export default function Quiz() {
                   </Text>
                 </Group>
                 <Group mt={12}>
-                  <Button color="blue" fullWidth onClick={handleStartQuestion}>
-                    Start another Quiz
+                  <Button color="blue" fullWidth onClick={() => resetQuiz()}>
+                    Close
                   </Button>
                 </Group>
               </Container>
