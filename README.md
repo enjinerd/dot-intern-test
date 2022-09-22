@@ -1,6 +1,6 @@
 # Geography Quiz App for Applying into DOT Internship
 
-## Preview : https://geography-quiz-app.netlify.app/
+## Preview : https://terra-quiz.vercel.app/
 
 ### For login to app
 
